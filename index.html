@@ -1,0 +1,66 @@
+/* 
+  Kostku - Pencatat Pengeluaran Anak Kost 
+
+  
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aplikasi pencatat pengeluaran anak kost" />
+  <title>KostKu — Pencatat Pengeluaran</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">K</span><div><h1>KostKu</h1><p>Catat uangmu, tenangkan akhir bulan.</p></div></div>
+    <button id="resetDataBtn" class="button button-ghost" type="button" title="Hapus semua data">Reset data</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div><p class="eyebrow">RINGKASAN BULAN INI</p><h2 id="monthTitle">Pengeluaran</h2><p class="hero-total" id="monthlyTotal">Rp0</p></div>
+      <div class="budget-meter" aria-label="Pemakaian anggaran"><div class="budget-meter-top"><span id="budgetUsedText">Belum ada anggaran</span><strong id="budgetPercent">0%</strong></div><div class="progress"><div id="budgetProgress" class="progress-fill"></div></div><p id="budgetRemainingText">Atur anggaran agar keuangan lebih terarah.</p></div>
+    </section>
+
+    <section class="summary-grid" aria-label="Ringkasan transaksi">
+      <article class="summary-card"><span class="summary-icon purple">↗</span><div><p>Total semua transaksi</p><strong id="allTimeTotal">Rp0</strong></div></article>
+      <article class="summary-card"><span class="summary-icon orange">▣</span><div><p>Transaksi bulan ini</p><strong id="transactionCount">0 transaksi</strong></div></article>
+      <article class="summary-card"><span class="summary-icon green">◎</span><div><p>Kategori terboros</p><strong id="topCategory">—</strong></div></article>
+    </section>
+
+    <div class="content-grid">
+      <section class="panel form-panel">
+        <div class="panel-heading"><div><p class="eyebrow">TRANSAKSI</p><h2 id="formTitle">Tambah pengeluaran</h2></div></div>
+        <form id="transactionForm">
+          <input id="editId" type="hidden" />
+          <div class="field"><label for="description">Keterangan</label><input id="description" type="text" maxlength="60" placeholder="Contoh: Makan siang" required /></div>
+          <div class="form-row"><div class="field"><label for="amount">Nominal</label><div class="money-input"><span>Rp</span><input id="amount" type="number" min="1" step="1" inputmode="numeric" placeholder="0" required /></div></div><div class="field"><label for="date">Tanggal</label><input id="date" type="date" required /></div></div>
+          <div class="field"><label for="category">Kategori</label><select id="category" required></select></div>
+          <div class="form-actions"><button id="cancelEditBtn" class="button button-secondary hidden" type="button">Batal</button><button class="button button-primary" type="submit"><span id="submitText">Simpan transaksi</span></button></div>
+        </form>
+      </section>
+
+      <section class="panel budget-panel">
+        <div class="panel-heading"><div><p class="eyebrow">PENGATURAN</p><h2>Anggaran bulanan</h2></div></div>
+        <form id="budgetForm"><div class="field"><label for="budget">Batas pengeluaran per bulan</label><div class="money-input"><span>Rp</span><input id="budget" type="number" min="0" step="1000" inputmode="numeric" placeholder="Contoh: 2000000" /></div></div><button class="button button-primary" type="submit">Simpan anggaran</button></form>
+        <hr />
+        <div class="category-settings"><div><p class="eyebrow">KATEGORI</p><h3>Kelola kategori</h3></div><form id="categoryForm" class="inline-form"><input id="newCategory" type="text" maxlength="24" placeholder="Kategori baru" /><button class="button button-secondary" type="submit">Tambah</button></form><div id="categoryChips" class="chips" aria-label="Daftar kategori"></div></div>
+      </section>
+    </div>
+
+    <section class="panel transactions-panel">
+      <div class="transactions-head"><div><p class="eyebrow">RIWAYAT</p><h2>Daftar pengeluaran</h2></div><div class="filters"><input id="searchInput" type="search" placeholder="Cari keterangan..." aria-label="Cari transaksi" /><select id="filterCategory" aria-label="Filter kategori"></select><input id="filterMonth" type="month" aria-label="Filter bulan" /></div></div>
+      <div id="emptyState" class="empty-state"><div>☕</div><h3>Belum ada transaksi</h3><p>Mulai catat pengeluaran pertamamu di formulir atas.</p></div>
+      <div id="transactionList" class="transaction-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <template id="transactionTemplate"><article class="transaction"><div class="transaction-category"></div><div class="transaction-info"><strong class="transaction-description"></strong><span class="transaction-meta"></span></div><strong class="transaction-amount"></strong><div class="transaction-actions"><button class="icon-button edit-button" type="button" title="Edit transaksi" aria-label="Edit transaksi">✎</button><button class="icon-button delete-button" type="button" title="Hapus transaksi" aria-label="Hapus transaksi">×</button></div></article></template>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body> 
+</html> 
+
